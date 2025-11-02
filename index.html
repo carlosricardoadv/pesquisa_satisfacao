@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pesquisa de Satisfação — Câmara Municipal de Alvorada-TO</title>
+  <meta name="description" content="Pesquisa de satisfação dos serviços prestados pela Câmara Municipal de Alvorada-TO." />
+  <style>
+    :root{--blue:#2c7be5;--blue-100:#e6f0ff;--blue-200:#cfe2ff;--gray-50:#f8fafc;--gray-200:#e2e8f0;--gray-700:#334155;--text:#0f172a}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--blue-100),#fff);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    header{background:linear-gradient(90deg,var(--blue),#5aa9ff);color:#fff;padding:22px 16px;position:sticky;top:0;z-index:10;box-shadow:0 6px 20px rgba(44,123,229,.25)}
+    header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    h1{margin:0;font-size:clamp(18px,3vw,26px)}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand .logo{width:36px;height:36px;border-radius:8px;background:#fff1;border:2px solid #fff3;display:grid;place-items:center;font-weight:700}
+    main{max-width:1100px;margin:18px auto;padding:0 12px;display:grid;grid-template-columns: 1.1fr .9fr;gap:16px}
+    .card{background:#fff;border:1px solid var(--gray-200);border-radius:14px;padding:16px;box-shadow:0 8px 24px rgba(44,123,229,.08)}
+    h2{margin:.3rem 0 1rem 0;font-size:20px;color:var(--blue)}
+    .muted{color:var(--gray-700)}
+    .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--gray-200);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--gray-700);background:#fff}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .scale{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0 14px}
+    .scale .opt{display:grid;place-items:center;border:1px solid var(--gray-200);background:var(--gray-50);border-radius:10px;width:44px;height:44px;cursor:pointer;user-select:none;transition:.2s}
+    .scale .opt:hover{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-200)}
+    .scale input{display:none}
+    .scale input:checked + .opt{background:var(--blue-100);border-color:var(--blue);box-shadow:inset 0 0 0 2px var(--blue)}
+    .q{padding:12px;border:1px solid var(--gray-200);border-radius:12px;margin-bottom:12px;background:#fff}
+    .q .qtitle{font-weight:600;margin-bottom:8px}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+    button.btn{border:1px solid var(--blue);background:var(--blue);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;transition:.15s}
+    button.btn:disabled{opacity:.6;cursor:not-allowed}
+    button.btn.secondary{background:#fff;color:var(--blue)}
+    .input{display:flex;flex-direction:column;gap:6px}
+    input[type=email]{padding:10px 12px;border:1px solid var(--gray-200);border-radius:10px;min-width:260px}
+    input[type=email]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-200)}
+    .hint{font-size:12px;color:var(--gray-700)}
+    .sep{height:1px;background:var(--gray-200);margin:12px 0}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .kpi{border:1px solid var(--gray-200);border-radius:12px;padding:12px;background:#fff}
+    .kpi .v{font-size:22px;font-weight:800}
+    .kpi .l{font-size:12px;color:var(--gray-700)}
+    canvas{width:100%;height:260px;border:1px solid var(--gray-200);border-radius:12px;background:#fff}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--gray-200);border-radius:12px;overflow:hidden}
+    th,td{padding:10px;border-bottom:1px solid var(--gray-200);font-size:14px}
+    th{background:var(--blue-100);text-align:left}
+    tfoot td{font-weight:700}
+    .notice{background:var(--blue-100);border:1px solid var(--blue-200);padding:10px;border-radius:10px}
+    @media (max-width: 980px){ main{grid-template-columns:1fr;gap:12px} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">CM</div>
+        <div>
+          <h1>Pesquisa de Satisfação — Câmara Municipal de Alvorada‑TO</h1>
+          <div class="legend">
+            <span class="pill">Período vigente</span>
+            <span class="pill">Resultados simulados localmente</span>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <span class="pill">Escala: 1 (ruim) → 5 (excelente)</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="pesquisa">
+      <h2 id="pesquisa">Avaliação dos serviços e do desempenho</h2>
+      <form id="formPesquisa">
+        <div class="q">
+          <div class="qtitle">1) Atendimento presencial da Câmara</div>
+          <div class="row">
+            <div class="muted">Como você avalia cordialidade, tempo de espera e solução de demandas no balcão?</div>
+            <div class="scale" role="radiogroup" aria-label="Atendimento presencial">
+              <label><input type="radio" name="q1" value="1"><div class="opt" title="1 - Ruim">1</div></label>
+              <label><input type="radio" name="q1" value="2"><div class="opt" title="2 - Regular">2</div></label>
+              <label><input type="radio" name="q1" value="3"><div class="opt" title="3 - Bom">3</div></label>
+              <label><input type="radio" name="q1" value="4"><div class="opt" title="4 - Muito bom">4</div></label>
+              <label><input type="radio" name="q1" value="5"><div class="opt" title="5 - Excelente">5</div></label>
+            </div>
+          </div>
+        </div>
+        <div class="q">
+          <div class="qtitle">2) Transparência do Portal</div>
+          <div class="row">
+            <div class="muted">As informações são completas, atualizadas e fáceis de localizar?</div>
+            <div class="scale" role="radiogroup" aria-label="Transparência do portal">
+              <label><input type="radio" name="q2" value="1"><div class="opt" title="1 - Ruim">1</div></label>
+              <label><input type="radio" name="q2" value="2"><div class="opt" title="2 - Regular">2</div></label>
+              <label><input type="radio" name="q2" value="3"><div class="opt" title="3 - Bom">3</div></label>
+              <label><input type="radio" name="q2" value="4"><div class="opt" title="4 - Muito bom">4</div></label>
+              <label><input type="radio" name="q2" value="5"><div class="opt" title="5 - Excelente">5</div></label>
+            </div>
+          </div>
+        </div>
+        <div class="q">
+          <div class="qtitle">3) Desempenho dos vereadores</div>
+          <div class="row">
+            <div class="muted">Você considera que os vereadores representam adequadamente os interesses da população?</div>
+            <div class="scale" role="radiogroup" aria-label="Desempenho dos vereadores">
+              <label><input type="radio" name="q3" value="1"><div class="opt" title="1 - Ruim">1</div></label>
+              <label><input type="radio" name="q3" value="2"><div class="opt" title="2 - Regular">2</div></label>
+              <label><input type="radio" name="q3" value="3"><div class="opt" title="3 - Bom">3</div></label>
+              <label><input type="radio" name="q3" value="4"><div class="opt" title="4 - Muito bom">4</div></label>
+              <label><input type="radio" name="q3" value="5"><div class="opt" title="5 - Excelente">5</div></label>
+            </div>
+          </div>
+        </div>
+        <div class="q">
+          <div class="qtitle">4) Papel fiscalizador da Câmara</div>
+          <div class="row">
+            <div class="muted">A fiscalização do Executivo é efetiva e tempestiva?</div>
+            <div class="scale" role="radiogroup" aria-label="Papel fiscalizador">
+              <label><input type="radio" name="q4" value="1"><div class="opt" title="1 - Ruim">1</div></label>
+              <label><input type="radio" name="q4" value="2"><div class="opt" title="2 - Regular">2</div></label>
+              <label><input type="radio" name="q4" value="3"><div class="opt" title="3 - Bom">3</div></label>
+              <label><input type="radio" name="q4" value="4"><div class="opt" title="4 - Muito bom">4</div></label>
+              <label><input type="radio" name="q4" value="5"><div class="opt" title="5 - Excelente">5</div></label>
+            </div>
+          </div>
+        </div>
+        <div class="q">
+          <div class="qtitle">5) Avaliação geral dos serviços e canais de comunicação</div>
+          <div class="row">
+            <div class="muted">Como você avalia o conjunto de serviços e a comunicação (site, redes, telefone) da Câmara?</div>
+            <div class="scale" role="radiogroup" aria-label="Avaliação geral">
+              <label><input type="radio" name="q5" value="1"><div class="opt" title="1 - Ruim">1</div></label>
+              <label><input type="radio" name="q5" value="2"><div class="opt" title="2 - Regular">2</div></label>
+              <label><input type="radio" name="q5" value="3"><div class="opt" title="3 - Bom">3</div></label>
+              <label><input type="radio" name="q5" value="4"><div class="opt" title="4 - Muito bom">4</div></label>
+              <label><input type="radio" name="q5" value="5"><div class="opt" title="5 - Excelente">5</div></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+        <div class="row">
+          <div class="input">
+            <label for="email"><strong>Confirme seu e-mail</strong></label>
+            <input type="email" id="email" placeholder="seuemail@exemplo.com" required />
+            <div class="hint">O e-mail é usado apenas para confirmar a participação. Nada é enviado a servidores.</div>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn secondary" id="previewBtn">Pré-visualizar resultado</button>
+            <button type="submit" class="btn" id="confirmBtn" disabled>Confirmar voto</button>
+          </div>
+        </div>
+        <div id="msg" class="hint" aria-live="polite" style="margin-top:8px;"></div>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="resultados">
+      <h2 id="resultados">Resultados (preliminar)</h2>
+      <div class="kpis">
+        <div class="kpi"><div class="l">Respondentes</div><div class="v" id="kpiResp">0</div></div>
+        <div class="kpi"><div class="l">Média geral</div><div class="v" id="kpiMedia">0,00</div></div>
+        <div class="kpi"><div class="l">Última atualização</div><div class="v" id="kpiTime">—</div></div>
+      </div>
+      <div class="sep"></div>
+      <div class="notice muted">O gráfico e a tabela abaixo mostram a situação atual (preliminar). Após confirmar seu voto, os resultados são atualizados em tempo real no seu navegador.</div>
+      <div style="margin:10px 0;"></div>
+      <canvas id="chart" width="600" height="320" aria-label="Gráfico de médias por pergunta" role="img"></canvas>
+      <div style="margin:10px 0;"></div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Pergunta</th><th>Média</th><th>Distribuição (1..5)</th></tr></thead>
+          <tbody id="tbody"></tbody>
+          <tfoot><tr><td><strong>Média geral</strong></td><td id="tfootMedia">0,00</td><td id="tfootObs" class="muted">Base preliminar</td></tr></tfoot>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const KEY = 'pesq_cmalvorada_v1';
+    const QUESTIONS = [
+      'Atendimento presencial',
+      'Transparência do Portal',
+      'Desempenho dos vereadores',
+      'Papel fiscalizador',
+      'Avaliação geral'
+    ];
+
+    function loadState(){
+      try{
+        const s = JSON.parse(localStorage.getItem(KEY) || '{}');
+        if(!s.counts){
+          s.counts = Array.from({length: QUESTIONS.length}, ()=> [0,0,0,0,0,0]);
+          s.total = 0; s.updatedAt=null; s.voted=false;
+        }
+        return s;
+      }catch(e){
+        return { counts: Array.from({length: QUESTIONS.length}, ()=> [0,0,0,0,0,0]), total:0, updatedAt:null, voted:false };
+      }
+    }
+    function saveState(s){ localStorage.setItem(KEY, JSON.stringify(s)); }
+    const $ = (sel)=>document.querySelector(sel);
+    const $$ = (sel)=>Array.from(document.querySelectorAll(sel));
+    function mean(arr){ let sum=0,w=0; for(let i=1;i<=5;i++){ sum+=i*arr[i]; w+=arr[i]; } return w? (sum/w):0; }
+    function fmt(n){ return n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function nowStr(){ return new Date().toLocaleString('pt-BR'); }
+    const emailEl = $('#email');
+    const confirmBtn = $('#confirmBtn');
+    function allAnswered(){ return ['q1','q2','q3','q4','q5'].every(n => $$(`input[name="${n}"]:checked`).length===1); }
+    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
+    function updateConfirmState(){ confirmBtn.disabled = !(allAnswered() && validEmail(emailEl.value)); }
+    emailEl.addEventListener('input', updateConfirmState);
+    ['q1','q2','q3','q4','q5'].forEach(n => $$( `input[name="${n}"]` ).forEach(r => r.addEventListener('change', updateConfirmState)));
+    const form = $('#formPesquisa');
+    $('#previewBtn').addEventListener('click', ()=>{ render(); $('#msg').innerHTML='<span style="color:#16a34a">Pré-visualização atualizada.</span>'; });
+    form.addEventListener('submit', (ev)=>{
+      ev.preventDefault();
+      const S = loadState();
+      if(S.voted){ $('#msg').innerHTML='<span style="color:#dc2626">Você já respondeu esta pesquisa neste navegador.</span>'; return; }
+      if(!allAnswered() || !validEmail(emailEl.value)){ $('#msg').innerHTML='<span style="color:#dc2626">Responda todas as perguntas e informe um e-mail válido.</span>'; return; }
+      const answers=[1,2,3,4,5].map(i => Number(($(`input[name="q${i}"]:checked`)||{}).value||0));
+      answers.forEach((score, idx)=>{ if(score>=1 && score<=5){ S.counts[idx][score]+=1; } });
+      S.total += 1; S.updatedAt = nowStr(); S.voted = true;
+      saveState(S);
+      $('#msg').innerHTML='<span style="color:#16a34a">Voto confirmado! Resultados atualizados abaixo.</span>';
+      form.querySelectorAll('input[type="radio"]').forEach(i => i.disabled = true);
+      emailEl.disabled = true; confirmBtn.disabled = true;
+      render();
+    });
+
+    const kpiResp = $('#kpiResp'); const kpiMedia = $('#kpiMedia'); const kpiTime = $('#kpiTime');
+    const tBody = $('#tbody'); const tFootMedia = $('#tfootMedia');
+
+    function calcStats(S){
+      const medias = S.counts.map(c => mean(c));
+      const mediaGeral = medias.reduce((a,b)=>a+b,0) / (medias.length||1);
+      return { medias, mediaGeral };
+    }
+    function renderTable(S){
+      const { medias, mediaGeral } = calcStats(S);
+      tBody.innerHTML = '';
+      for(let i=0;i<QUESTIONS.length;i++){
+        const dist = S.counts[i].slice(1).map((v,ix)=> `${ix+1}:${v}`).join(' | ');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${i+1}) ${QUESTIONS[i]}</td><td>${fmt(medias[i])}</td><td style="color:#334155">${dist}</td>`;
+        tBody.appendChild(tr);
+      }
+      tFootMedia.textContent = fmt(mediaGeral);
+    }
+    function drawChart(S){
+      const { medias } = calcStats(S);
+      const labels = QUESTIONS.map((q,i)=> `${i+1}`);
+      const canvas = $('#chart'); const ctx = canvas.getContext('2d');
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      const padL=40,padB=40,padT=20,padR=10; const W=canvas.width-padL-padR; const H=canvas.height-padT-padB;
+      ctx.strokeStyle='#e2e8f0'; ctx.fillStyle='#334155'; ctx.lineWidth=1;
+      for(let y=0;y<=5;y++){ const yy=padT+H-(y/5)*H; ctx.beginPath(); ctx.moveTo(padL,yy); ctx.lineTo(padL+W,yy); ctx.stroke(); ctx.fillText(String(y), padL-20, yy+4); }
+      const n=medias.length; const bw=W/(n*1.6); const gap=bw*0.6; let x=padL+gap;
+      for(let i=0;i<n;i++){ const v=medias[i]; const h=(v/5)*H; const y=padT+H-h;
+        const grad=ctx.createLinearGradient(0,y,0,y+h); grad.addColorStop(0,'#5aa9ff'); grad.addColorStop(1,'#2c7be5');
+        ctx.fillStyle=grad; ctx.fillRect(x,y,bw,h);
+        ctx.fillStyle='#0f172a'; ctx.font='12px system-ui,-apple-system,Segoe UI,Roboto,Arial'; ctx.fillText(labels[i], x+bw/2-3, padT+H+16); ctx.fillText(fmt(v), x+bw/2-16, y-6);
+        x += bw+gap;
+      }
+      ctx.fillStyle='#334155'; ctx.font='13px system-ui,-apple-system,Segoe UI,Roboto,Arial'; ctx.fillText('Médias por Pergunta (0–5)', padL, padT-4);
+    }
+    function render(){
+      const S = loadState();
+      kpiResp.textContent = String(S.total);
+      const { mediaGeral } = calcStats(S);
+      kpiMedia.textContent = fmt(mediaGeral);
+      kpiTime.textContent = S.updatedAt ? S.updatedAt : '—';
+      renderTable(S);
+      drawChart(S);
+    }
+    render();
+  </script>
+</body>
+</html>
