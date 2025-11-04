@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pesquisa de Satisfação — Câmara Municipal de Alvorada-TO</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f3f6fa;
+      color: #1e293b;
+    }
+    header {
+      background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 { margin: 0; font-size: 24px; }
+    main {
+      max-width: 720px;
+      background: #fff;
+      margin: 20px auto;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #1e3a8a;
+      font-size: 18px;
+      margin-top: 30px;
+    }
+    .question { margin: 16px 0; }
+    .scale label {
+      margin-right: 10px;
+    }
+    .scale input {
+      margin-right: 4px;
+    }
+    input[type=email] {
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #3b82f6;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover { background: #2563eb; }
+    .thankyou {
+      display: none;
+      background: #dcfce7;
+      border: 1px solid #22c55e;
+      padding: 16px;
+      border-radius: 8px;
+      color: #166534;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pesquisa de Satisfação — Câmara Municipal de Alvorada-TO</h1>
+  </header>
+
+  <main>
+    <p><strong>Sua opinião é muito importante</strong> para o aperfeiçoamento dos serviços prestados pela Câmara Municipal de Alvorada-TO.</p>
+
+    <form name="Pesquisa de Satisfação - Câmara Municipal de Alvorada" method="POST" data-netlify="true" id="surveyForm">
+      <div class="question">
+        <h2>1. Atendimento presencial da Câmara</h2>
+        <div class="scale">
+          <label><input type="radio" name="q1" value="1" required>1</label>
+          <label><input type="radio" name="q1" value="2">2</label>
+          <label><input type="radio" name="q1" value="3">3</label>
+          <label><input type="radio" name="q1" value="4">4</label>
+          <label><input type="radio" name="q1" value="5">5</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h2>2. Transparência das informações no portal institucional</h2>
+        <div class="scale">
+          <label><input type="radio" name="q2" value="1" required>1</label>
+          <label><input type="radio" name="q2" value="2">2</label>
+          <label><input type="radio" name="q2" value="3">3</label>
+          <label><input type="radio" name="q2" value="4">4</label>
+          <label><input type="radio" name="q2" value="5">5</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h2>3. Desempenho dos vereadores</h2>
+        <div class="scale">
+          <label><input type="radio" name="q3" value="1" required>1</label>
+          <label><input type="radio" name="q3" value="2">2</label>
+          <label><input type="radio" name="q3" value="3">3</label>
+          <label><input type="radio" name="q3" value="4">4</label>
+          <label><input type="radio" name="q3" value="5">5</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h2>4. Papel fiscalizador da Câmara</h2>
+        <div class="scale">
+          <label><input type="radio" name="q4" value="1" required>1</label>
+          <label><input type="radio" name="q4" value="2">2</label>
+          <label><input type="radio" name="q4" value="3">3</label>
+          <label><input type="radio" name="q4" value="4">4</label>
+          <label><input type="radio" name="q4" value="5">5</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h2>5. Avaliação geral dos serviços e canais de comunicação</h2>
+        <div class="scale">
+          <label><input type="radio" name="q5" value="1" required>1</label>
+          <label><input type="radio" name="q5" value="2">2</label>
+          <label><input type="radio" name="q5" value="3">3</label>
+          <label><input type="radio" name="q5" value="4">4</label>
+          <label><input type="radio" name="q5" value="5">5</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h2>E-mail para confirmação</h2>
+        <input type="email" name="email" placeholder="seuemail@exemplo.com" required>
+      </div>
+
+      <button type="submit">Enviar resposta</button>
+    </form>
+
+    <div class="thankyou" id="thankyouMessage">
+      ✅ <strong>Obrigado pela sua participação!</strong><br>
+      Sua resposta foi registrada com sucesso.
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('surveyForm');
+    const msg = document.getElementById('thankyouMessage');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const data = new FormData(form);
+      fetch("/", { method: "POST", body: data })
+        .then(() => {
+          form.style.display = "none";
+          msg.style.display = "block";
+        })
+        .catch(() => alert("Erro ao enviar. Verifique sua conexão e tente novamente."));
+    });
+  </script>
+</body>
+</html>
